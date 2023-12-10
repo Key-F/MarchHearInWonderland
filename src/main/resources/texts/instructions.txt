@@ -1,0 +1,12 @@
+ Plot: March Hear with his bruddas are going to have a tea party. Kettle is broken. Hear needs to fix it and find everything for this party.
+
+ Main goal is to invite everyone for a tea party and be prepared for it.
+ 1.	Invite Hatter.
+ 2.	Invite White Rabbit.
+ 3.	Invite Jack of Diamonds.
+ 4.	Invite Caterpillar.
+ 5.	Fix Kettle.
+ 6.	Find some tea.
+
+
+ Type "help" to get a list of all the commands.
