@@ -7,6 +7,17 @@ public class Character {
     private String name;
     private Location location;
     private List<Item> itemNeeded;
+    private List<Item> itemWanted;
+
+    public boolean isGoingToParty() {
+        return isGoingToParty;
+    }
+
+    public void setGoingToParty(boolean goingToParty) {
+        isGoingToParty = goingToParty;
+    }
+
+    private boolean isGoingToParty;
 
 
     public void say() {

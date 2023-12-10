@@ -1,0 +1,14 @@
+move,go
+get,pick
+drop
+inventory,i
+location,where
+look,examine
+exit,quit,q
+north,n
+south,s
+east,e
+west,w
+talk,speak
+use
+help

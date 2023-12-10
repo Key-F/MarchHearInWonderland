@@ -1,8 +1,8 @@
 package org.keyf;
 
+import java.util.HashMap;
+
 public class Control {
 
-    public static void printInstructions() {
-        System.out.println(Util.getResourceFileAsString("texts/instructions.txt"));
-    }
+
 }

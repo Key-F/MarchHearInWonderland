@@ -6,6 +6,7 @@ public class Item {
 
     private String name;
     private boolean isFixed;
+    private boolean isNeededForParty;
     private List<Character> whoNeeds;
 
 

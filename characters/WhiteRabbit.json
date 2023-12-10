@@ -1,0 +1,9 @@
+{
+  "Name": "White Rabbit",
+  "Location": "Rabbit's House",
+  "ItemsNeeded": ["Watch"],
+  "ItemsWanted": ["Pie"],
+  "Texts": [
+    "Hi friend"
+  ]
+}

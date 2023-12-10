@@ -7,6 +7,6 @@
  4.	Invite Caterpillar.
  5.	Fix Kettle.
  6.	Find some tea.
-
+ 7. Find teacups for everyone.
 
  Type "help" to get a list of all the commands.
