@@ -1,18 +1,17 @@
 package org.keyf;
 
 import org.apache.commons.io.IOUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class Location {
 
     enum Direction {
-        North, East, South, West,
+        north, east, south, west,
     }
 
     private String name;
@@ -38,6 +37,7 @@ public class Location {
             JSONObject LocObj = new JSONObject(jsonTxt);
             this.name = (String) LocObj.get("Name");
             this.isSafeHouse = (boolean) LocObj.get("SafeHouse");
+            this.items = new ArrayList<>();
         }
         catch(Exception e) {};
     }
@@ -49,16 +49,16 @@ public class Location {
             JSONObject LocObj = new JSONObject(jsonTxt);
             this.exits = new HashMap<>();
             if (!(LocObj.get("North")).equals("")) {
-                exits.put(Direction.North, Wonderland.getLocation((String) (LocObj.get("North"))));
+                exits.put(Direction.north, Wonderland.getLocation((String) (LocObj.get("North"))));
             }
             if (!(LocObj.get("West")).equals("")) {
-                exits.put(Direction.West, Wonderland.getLocation((String) (LocObj.get("West"))));
+                exits.put(Direction.west, Wonderland.getLocation((String) (LocObj.get("West"))));
             }
             if (!(LocObj.get("East")).equals("")) {
-                exits.put(Direction.East, Wonderland.getLocation((String) (LocObj.get("East"))));
+                exits.put(Direction.east, Wonderland.getLocation((String) (LocObj.get("East"))));
             }
             if (!(LocObj.get("South")).equals("")) {
-                exits.put(Direction.South, Wonderland.getLocation((String) (LocObj.get("South"))));
+                exits.put(Direction.south, Wonderland.getLocation((String) (LocObj.get("South"))));
             }
         }
         catch(Exception e) {};
@@ -114,18 +114,14 @@ public class Location {
         this.itemsNeededForAVisit = itemsNeededForAVisit;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Location location = (Location) o;
-        return Objects.equals(name, location.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
+    public Item getItem(String name) {
+        for (Item i : this.items) {
+            if (i.getName().equals(name)) {
+                items.remove(i);
+                return i;
+            }
+        }
+        return null;
     }
 
 

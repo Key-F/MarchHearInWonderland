@@ -1,0 +1,15 @@
+{
+  "Name": "Forest",
+  "SafeHouse": false,
+  "StartPoint": false,
+  "North": "White Rabbit's House",
+  "West": "",
+  "East": "March Hare's house",
+  "South": "",
+  "Texts": [
+    "It's Forest",
+    "",
+    "",
+    ""
+  ]
+}

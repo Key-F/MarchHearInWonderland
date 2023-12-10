@@ -2,6 +2,19 @@ package org.keyf;
 
 public class Actions {
 
+    /** Instance variable to keep track of valid actions */
+    private String[] actions;
+
+    /** Constructor for Actions class accepting a String array */
+    public Actions(String[] actions) {
+        // Initializes instance variable
+        this.actions = actions;
+    }
+
+    /** Public getter method to return the valid actions */
+    public String[] getActions() {
+        return actions;
+    }
 
     public void speak(Character character) {
     }

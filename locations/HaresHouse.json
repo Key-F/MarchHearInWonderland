@@ -3,9 +3,13 @@
   "SafeHouse": true,
   "StartPoint": true,
   "North": "Garden",
-  "West": "",
+  "West": "Forest",
   "East": "",
   "South": "",
+  "Items": [
+    "Watch",
+    "Bread"
+    ],
   "Texts": [
     "It's your home ",
     "You are at the March Hare's house",
