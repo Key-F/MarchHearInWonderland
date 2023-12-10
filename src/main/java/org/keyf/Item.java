@@ -9,6 +9,10 @@ public class Item {
     private boolean isNeededForParty;
     private List<Character> whoNeeds;
 
+    public Item(String name) {
+        this.name = name;
+    }
+
 
     public void fixItem() {
         if (isFixed) {

@@ -1,12 +1,9 @@
 package org.keyf;
 
-import org.json.JSONObject;
-
 import java.io.*;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
-public class Util {
+public class TextUtil {
 
     public static void printInstructions() {
 

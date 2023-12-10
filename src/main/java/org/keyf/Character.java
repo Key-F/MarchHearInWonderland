@@ -7,11 +7,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 
 public class Character {
 
     private String name;
-    private Location location;
+    //private Location location;
     private List<Item> itemNeeded;
     private List<Item> itemWanted;
     private String speech;
@@ -23,7 +24,7 @@ public class Character {
             JSONObject LocObj = new JSONObject(jsonTxt);
             this.name = (String) LocObj.get("Name");
             this.isGoingToParty = false;
-            this.location = Wonderland.getLocation((String) LocObj.get("Location"));
+            //this.location = Wonderland.getLocation((String) LocObj.get("Location"));
         }
         catch(Exception e) {};
     }
@@ -51,13 +52,6 @@ public class Character {
         this.name = name;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 
     public List<Item> getItemNeeded() {
         return itemNeeded;
@@ -66,4 +60,5 @@ public class Character {
     public void setItemNeeded(List<Item> itemNeeded) {
         this.itemNeeded = itemNeeded;
     }
+
 }

@@ -23,22 +23,19 @@ public class Wonderland {
         createLocations();
         characterList = new ArrayList<>();
         createCharacters();
-        actions = Util.createActions();
-        Util.printHelp();
+        actions = TextUtil.createActions();
+        TextUtil.printHelp();
         createPlayer();
     }
 
     public static void main(String[] args) {
-        Util.printInstructions();
+        TextUtil.printInstructions();
         Wonderland game = new Wonderland();
         Scanner in = new Scanner(System.in);
-        System.out.println("kk");
 
         while (true) {
-
             if (player.hasWon()) {
-                // String win = Setup.win();
-                // System.out.println("\n" + win);
+                System.out.println("You won");
                 break;
             }
 
@@ -84,7 +81,7 @@ public class Wonderland {
                     // If the user wants to see their inventory
                     case "inventory":
                         // Call the Player getInventory method to display the inventory
-                        game.player.getInventory();
+                        game.player.getInventory().print();
                         break;
 
                     // If the user wants to move to a different room
@@ -157,7 +154,7 @@ public class Wonderland {
 
                     // If the user wants to see the help menu
                     case "help":
-                        Util.printHelp();
+                        TextUtil.printHelp();
                         break;
                 }
 
@@ -170,9 +167,10 @@ public class Wonderland {
     }
 
     public void createPlayer() {
+        Item item = new Item("Key");
         player = new Player(getLocation("March Hare's house"),
                 new Inventory(), getCharacter("March Hare house"));
-
+        player.getInventory().addItem(item);
     }
 
     public void createCharacters() {
