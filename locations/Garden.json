@@ -6,6 +6,12 @@
   "West": "",
   "East": "",
   "South": "March Hare's house",
+  "Items": [
+    "Tea Cup"
+  ],
+  "Characters": [
+    ""
+  ],
   "Texts": [
     "It's Garden",
     "",

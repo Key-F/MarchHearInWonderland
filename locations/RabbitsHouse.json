@@ -6,8 +6,15 @@
   "West": "",
   "East": "",
   "South": "Forest",
+  "Characters": [
+    "White Rabbit"
+  ],
+  "Items": [
+    "Tea Cup",
+    "Bread"
+  ],
   "Texts": [
-    "It's Garden",
+    "White Rabbit's House",
     "",
     "",
     ""

@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class Character {
-
     private String name;
-    //private Location location;
+    private Location location;
     private List<Item> itemNeeded;
     private List<Item> itemWanted;
     private String speech;
+    private boolean isGoingToParty;
 
     Character(File file) {
         try {
@@ -29,6 +29,26 @@ public class Character {
         catch(Exception e) {};
     }
 
+    Character(String name) {
+        final File folder = new File("characters/");
+        for (File fileEntry : folder.listFiles()) {
+            if (fileEntry.getPath()
+                    .toLowerCase()
+                    .contains(name.toLowerCase().replaceAll("\\s+",""))) {
+                try {
+                    InputStream is = new FileInputStream(fileEntry);
+                    String jsonTxt = IOUtils.toString(is, "UTF-8");
+                    JSONObject LocObj = new JSONObject(jsonTxt);
+                    this.name = (String) LocObj.get("Name");
+                    this.isGoingToParty = false;
+                    //this.location = Wonderland.getLocation((String) LocObj.get("Location"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public boolean isGoingToParty() {
         return isGoingToParty;
     }
@@ -36,8 +56,6 @@ public class Character {
     public void setGoingToParty(boolean goingToParty) {
         isGoingToParty = goingToParty;
     }
-
-    private boolean isGoingToParty;
 
 
     public void say() {

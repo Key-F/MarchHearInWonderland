@@ -36,6 +36,11 @@ public class Player {
                 else System.out.println("There is nothing in the West");
                 break;
         }
+        CurrentLocation.printInfo();
+    }
+
+    public void getStatus() {
+
     }
 
     public void talkTo(String npc) {

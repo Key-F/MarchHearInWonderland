@@ -6,6 +6,13 @@
   "West": "",
   "East": "March Hare's house",
   "South": "",
+  "Items": [
+    "Fancy Hat",
+    "Card Deck"
+  ],
+  "Characters": [
+    ""
+  ],
   "Texts": [
     "It's Forest",
     "",

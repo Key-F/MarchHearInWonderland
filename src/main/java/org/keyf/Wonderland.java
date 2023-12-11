@@ -23,9 +23,12 @@ public class Wonderland {
         createLocations();
         characterList = new ArrayList<>();
         createCharacters();
+        itemList = new ArrayList<>();
+        createItems();
         actions = TextUtil.createActions();
         TextUtil.printHelp();
         createPlayer();
+        player.getCurrentLocation().printInfo();
     }
 
     public static void main(String[] args) {
@@ -187,6 +190,16 @@ public class Wonderland {
         }
         for (File fileEntry : folder.listFiles()) {
             generateConnections(fileEntry);
+        }
+    }
+
+    public void createItems() {
+        final File folder = new File("items/");
+        for (File fileEntry : folder.listFiles()) {
+            if (fileEntry.getPath().equals("TeaCup"))
+                for(int i = 0; i < 4; i++)
+                    itemList.add(new Item(fileEntry));
+            itemList.add(new Item(fileEntry));
         }
     }
 

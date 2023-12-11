@@ -1,12 +1,16 @@
 package org.keyf;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static org.keyf.Colors.*;
 
 public class Location {
 
@@ -38,33 +42,71 @@ public class Location {
             this.name = (String) LocObj.get("Name");
             this.isSafeHouse = (boolean) LocObj.get("SafeHouse");
             this.items = new ArrayList<>();
+            this.npcs = new ArrayList<>();
+
+            for (Object obj : (JSONArray) LocObj.get("Characters")) {
+                if (obj.equals("")) continue;
+                this.npcs.add(new Character((String)obj));
+            }
+            for (Object obj : (JSONArray) LocObj.get("Items")) {
+                if (obj.equals("")) continue;
+                this.items.add(new Item((String)obj));
+            }
+
         }
-        catch(Exception e) {};
+        catch(Exception e) {e.printStackTrace();};
     }
 
-    public void generateConnections(File file) {
-        try {
-            InputStream is = new FileInputStream(file);
-            String jsonTxt = IOUtils.toString(is, "UTF-8");
-            JSONObject LocObj = new JSONObject(jsonTxt);
-            this.exits = new HashMap<>();
-            if (!(LocObj.get("North")).equals("")) {
-                exits.put(Direction.north, Wonderland.getLocation((String) (LocObj.get("North"))));
-            }
-            if (!(LocObj.get("West")).equals("")) {
-                exits.put(Direction.west, Wonderland.getLocation((String) (LocObj.get("West"))));
-            }
-            if (!(LocObj.get("East")).equals("")) {
-                exits.put(Direction.east, Wonderland.getLocation((String) (LocObj.get("East"))));
-            }
-            if (!(LocObj.get("South")).equals("")) {
-                exits.put(Direction.south, Wonderland.getLocation((String) (LocObj.get("South"))));
-            }
-        }
-        catch(Exception e) {};
+//    public void generateConnections(File file) {
+//        try {
+//            InputStream is = new FileInputStream(file);
+//            String jsonTxt = IOUtils.toString(is, "UTF-8");
+//            JSONObject LocObj = new JSONObject(jsonTxt);
+//            this.exits = new HashMap<>();
+//            if (!(LocObj.get("North")).equals("")) {
+//                exits.put(Direction.north, Wonderland.getLocation((String) (LocObj.get("North"))));
+//            }
+//            if (!(LocObj.get("West")).equals("")) {
+//                exits.put(Direction.west, Wonderland.getLocation((String) (LocObj.get("West"))));
+//            }
+//            if (!(LocObj.get("East")).equals("")) {
+//                exits.put(Direction.east, Wonderland.getLocation((String) (LocObj.get("East"))));
+//            }
+//            if (!(LocObj.get("South")).equals("")) {
+//                exits.put(Direction.south, Wonderland.getLocation((String) (LocObj.get("South"))));
+//            }
+//        }
+//        catch(Exception e) {};
+//    }
+
+    public void printLocation() {
+        System.out.println("You are in the: " + name);
     }
 
-
+    public void printInfo() {
+        // info about location
+        printLocation();
+        // info about characters
+        if (npcs.isEmpty())  System.out.println("There're no npcs in this location");
+        else  System.out.println("NPC's in this location:");
+        for (Character c : npcs) {
+            System.out.println("Here you see " + c.getName());
+        }
+        // info about items
+        if (items.isEmpty())  System.out.println("There're no items in this location");
+        else  System.out.println("Items in this location:");
+        for (Item item : items) {
+            System.out.println(item.getName());
+        }
+        // info about directions
+        for (Map.Entry<Direction, Location> entry :
+                exits.entrySet()) {
+            System.out.println("To the " + ANSI_RED + entry.getKey().toString() +
+                    ANSI_GREEN +
+                    " " + entry.getValue().getName() +
+                    ANSI_RESET + " is located");
+        }
+    }
 
     public String getName() {
         return name;
