@@ -1,0 +1,7 @@
+{
+  "Name": "Caterpillar",
+  "Location": "Mushroom",
+  "ItemsNeeded": [""],
+  "ItemsWanted": ["Tobacco"],
+  "Speech": "Uh, I like to smoke, do you have some?"
+}

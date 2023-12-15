@@ -7,6 +7,7 @@ public class TextUtil {
 
     public static void printInstructions() {
 
+
         // Create FileReader and BufferedReader objects to read the instructions from a
         // file
         try (FileReader file = new FileReader("texts/instructions.txt");

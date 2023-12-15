@@ -1,0 +1,18 @@
+{
+  "Name": "Cloudy Mountains",
+  "SafeHouse": false,
+  "StartPoint": false,
+  "North": "",
+  "West": "Swamps",
+  "East": "Castle",
+  "South": "White Rabbit's House",
+  "Items": [
+    "Tobacco"
+  ],
+  "Characters": [
+    ""
+  ],
+  "Texts": [
+    "Cloudy Mountains"
+  ]
+}

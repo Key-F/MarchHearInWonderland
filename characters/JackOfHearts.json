@@ -1,0 +1,7 @@
+{
+  "Name": "Jack of Hearts",
+  "Location": "Castle",
+  "ItemsNeeded": [""],
+  "ItemsWanted": ["Pretzels"],
+  "Speech": "Where is my Pretzels?"
+}

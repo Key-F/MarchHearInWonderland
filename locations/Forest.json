@@ -3,12 +3,13 @@
   "SafeHouse": false,
   "StartPoint": false,
   "North": "White Rabbit's House",
-  "West": "",
+  "West": "Swamps",
   "East": "March Hare's house",
-  "South": "",
+  "South": "Mushroom",
   "Items": [
     "Fancy Hat",
-    "Card Deck"
+    "Card Deck",
+    "Pie"
   ],
   "Characters": [
     ""

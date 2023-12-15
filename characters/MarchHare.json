@@ -1,0 +1,7 @@
+{
+  "Name": "March Hear",
+  "Location": "March Hare's house",
+  "ItemsNeeded": ["Kettle", "Tea", "Card Deck", "Fancy Hat", "Key"],
+  "ItemsWanted": [""],
+  "Speech": "Hi friend"
+}

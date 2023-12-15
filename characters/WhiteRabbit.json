@@ -1,9 +1,7 @@
 {
   "Name": "White Rabbit",
   "Location": "Rabbit's House",
-  "ItemsNeeded": ["Watch", "Tea Cup"],
+  "ItemsNeeded": ["Watch", "Jar"],
   "ItemsWanted": ["Pie"],
-  "Texts": [
-    "Hi friend"
-  ]
+  "Speech": "Do you have a pie?"
 }

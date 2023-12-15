@@ -1,19 +1,18 @@
 {
-  "Name": "Garden",
+  "Name": "Castle",
   "SafeHouse": false,
   "StartPoint": false,
-  "North": "Castle",
+  "North": "Cloudy Mountains",
   "West": "",
   "East": "",
-  "South": "March Hare's house",
+  "South": "Garden",
   "Items": [
-    "Jar",
-    "Kettle"
+    "Tobacco"
   ],
   "Characters": [
-    "Hatter"
+    "Jack of Hearts"
   ],
   "Texts": [
-    "It's Garden"
+    "It's Castle"
   ]
 }

@@ -31,7 +31,7 @@ public class Location {
             return;
         }
         items.add(item);
-        System.out.println("You stored " + item.getName());
+        System.out.println("You stored " + item.getNameFullName());
     }
 
     Location(File file) {
@@ -41,6 +41,7 @@ public class Location {
             JSONObject LocObj = new JSONObject(jsonTxt);
             this.name = (String) LocObj.get("Name");
             this.isSafeHouse = (boolean) LocObj.get("SafeHouse");
+            if (this.isSafeHouse) Wonderland.safeHouse = this;
             this.items = new ArrayList<>();
             this.npcs = new ArrayList<>();
 
@@ -96,7 +97,7 @@ public class Location {
         if (items.isEmpty())  System.out.println("There're no items in this location");
         else  System.out.println("Items in this location:");
         for (Item item : items) {
-            System.out.println(item.getName());
+            System.out.println(item.getNameFullName());
         }
         // info about directions
         for (Map.Entry<Direction, Location> entry :
@@ -106,6 +107,7 @@ public class Location {
                     " " + entry.getValue().getName() +
                     ANSI_RESET + " is located");
         }
+        System.out.println();
     }
 
     public String getName() {
@@ -156,15 +158,38 @@ public class Location {
         this.itemsNeededForAVisit = itemsNeededForAVisit;
     }
 
-    public Item getItem(String name) {
+    public  boolean hasItem(String item) {
+        for (Item i : items) {
+            if (i.getNameFullName().toLowerCase().contains(item.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Item pickUpItem(String name) {
         for (Item i : this.items) {
-            if (i.getName().equals(name)) {
+            if (i.getNameFullName().toLowerCase().contains(name)) {
                 items.remove(i);
+                System.out.println("You picked up " + i.getNameFullName());
+                return i;
+            }
+        }
+        System.out.println("Item not found " + name);
+        return null;
+    }
+
+    public Item getItem(String name) {
+        for (Item i : items) {
+            if (i.getNameFullName().toLowerCase().contains(name.toLowerCase())) {
                 return i;
             }
         }
         return null;
     }
 
+    public void addItem(Item item) {
+        items.add(item);
+    }
 
 }

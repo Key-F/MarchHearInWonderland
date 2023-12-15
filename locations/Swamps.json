@@ -1,19 +1,19 @@
 {
-  "Name": "White Rabbit's House",
+  "Name": "Swamps",
   "SafeHouse": false,
   "StartPoint": false,
-  "North": "Cloudy Mountains",
+  "North": "Mushroom",
   "West": "",
   "East": "",
-  "South": "Forest",
+  "South": "",
   "Characters": [
-    "White Rabbit"
+    ""
   ],
   "Items": [
     "Jar",
     "Tea"
   ],
   "Texts": [
-    "White Rabbit's House"
+    "It's a swamp"
   ]
 }

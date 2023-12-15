@@ -1,14 +1,17 @@
 move,go
-get,pick
-drop
+get,pick,take
+fix, f
+give
+drop,d
+invite,call
 inventory,i
 location,where
-look,examine
+look,examine,l
 exit,quit,q
 north,n
 south,s
 east,e
 west,w
 talk,speak
-use
+status
 help

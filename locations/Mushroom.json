@@ -1,0 +1,19 @@
+{
+  "Name": "Mushroom",
+  "SafeHouse": false,
+  "StartPoint": false,
+  "North": "Forest",
+  "West": "",
+  "East": "",
+  "South": "Swamps",
+  "Characters": [
+    "Caterpillar"
+  ],
+  "Items": [
+    "Pretzels",
+    "Butter"
+  ],
+  "Texts": [
+    "It's a Mushroom"
+  ]
+}

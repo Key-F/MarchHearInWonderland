@@ -1,0 +1,7 @@
+{
+  "Name": "Hatter",
+  "Location": "Garden",
+  "ItemsNeeded": [""],
+  "ItemsWanted": ["Bread", "Butter"],
+  "Speech": "I want some bread and butter, otherwise I wouldn’t drink tea with you"
+}

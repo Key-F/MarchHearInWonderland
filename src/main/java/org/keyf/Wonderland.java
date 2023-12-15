@@ -11,8 +11,8 @@ import java.util.*;
 public class Wonderland {
 
     public static Player player;
-    public static List<Character> characterList;
-    public static List<Item> itemList;
+    //public static List<Character> characterList;
+    public static List<Item> itemForParty;
     public static Location safeHouse;
     public static List<Location> locations;
 
@@ -21,12 +21,11 @@ public class Wonderland {
     public Wonderland() {
         locations = new ArrayList<>();
         createLocations();
-        characterList = new ArrayList<>();
-        createCharacters();
-        itemList = new ArrayList<>();
-        createItems();
+        //characterList = new ArrayList<>();
+        //createCharacters();
+        //itemList = new ArrayList<>();
+        //createItems();
         actions = TextUtil.createActions();
-        TextUtil.printHelp();
         createPlayer();
         player.getCurrentLocation().printInfo();
     }
@@ -63,7 +62,6 @@ public class Wonderland {
                         System.out.println("\nYou are at the " + game.player.getCurrentLocation().getName());
                         break;
 
-                    // If the user wants to get an item from the room
                     case "get":
                         // Check if the user specified an item
                         if (userCommand.length >= 2) {
@@ -74,18 +72,60 @@ public class Wonderland {
                                 item += userCommand[i] + " ";
                             }
 
-                            game.player.getInventory().addItem(player.getCurrentLocation().getItem(item));
+                            player.getInventory().addItem(player.getCurrentLocation().pickUpItem(item.trim()));
 
                         } else {
                             System.out.println("\nYou must specify an item to get. Try 'get <item name>'.");
                         }
                         break;
+                    case "drop":
+                        if (userCommand.length >= 2) {
+                            String item = "";
 
-                    // If the user wants to see their inventory
-                    case "inventory":
-                        // Call the Player getInventory method to display the inventory
-                        game.player.getInventory().print();
+                            // Parse the item name from the user input
+                            for (int i = 1; i < userCommand.length; i++) {
+                                item += userCommand[i] + " ";
+                            }
+
+                            if (player.getInventory().hasItem(item.trim(), player.getCharacter())) {
+                                player.getCurrentLocation().addItem(player.getInventory().getItem(item.trim()));
+                                System.out.println("You dropped: " + item.trim());
+                                player.getInventory().dropItem(item.trim());
+                            }
+
+                        } else {
+                            System.out.println("\nYou must specify an item to drop. Try 'drop <item name>'.");
+                        }
                         break;
+
+                    case "give":
+                        if (userCommand.length >= 2) {
+                            String npc = "";
+
+                            // Parse the NPC name from the user input
+                            for (int i = 1; i < userCommand.length; i++) {
+                                npc += userCommand[i] + " ";
+                            }
+
+                            // Call the Player talkTo method to display the NPC's dialogue
+                            Character ch = game.player.startGivingAction(npc.trim().toLowerCase());
+                            if (ch == null) continue;
+                            String itemName = in.nextLine();
+                            game.player.give(ch, itemName);
+
+                        } else {
+                            System.out.println("\nYou must specify a character to talk to. Try 'talk <character name>'.");
+                        }
+                        break;
+
+                    case "inventory":
+                        player.getInventory().print();
+                        break;
+
+                    case "look":
+                        player.getCurrentLocation().printInfo();
+                        break;
+
 
                     // If the user wants to move to a different room
                     case "move":
@@ -142,7 +182,24 @@ public class Wonderland {
                             }
 
                             game.player.getInventory().hasItem(item.trim(), player.getCharacter());
-                            game.player.getInventory().fixItem(item.trim());
+                            game.player.fixItem(item.trim());
+                        } else {
+                            System.out.println("\nPlease specify an item to use. Try 'use <item name>'");
+                        }
+                        break;
+
+                    case "invite":
+                        // Check if the user specified an item, if not display an error message
+                        if (userCommand.length >= 2) {
+                            String ch = "";
+
+                            // Parse the item name from the user input
+                            for (int i = 1; i < userCommand.length; i++) {
+                                ch += userCommand[i] + " ";
+                            }
+
+                            game.player.invite(ch.trim().toLowerCase());
+
                         } else {
                             System.out.println("\nPlease specify an item to use. Try 'use <item name>'");
                         }
@@ -159,29 +216,33 @@ public class Wonderland {
                     case "help":
                         TextUtil.printHelp();
                         break;
+
+                    case "status":
+                        player.getStatus();
+                        break;
                 }
 
             }
         }
 
         // Close the scanner object
-        in.close();
+        //in.close();
 
     }
 
     public void createPlayer() {
         Item item = new Item("Key");
         player = new Player(getLocation("March Hare's house"),
-                new Inventory(), getCharacter("March Hare house"));
+                new Inventory(), new Character("March Hare"));
         player.getInventory().addItem(item);
     }
 
-    public void createCharacters() {
-        final File folder = new File("characters/");
-        for (File fileEntry : folder.listFiles()) {
-            characterList.add(new Character(fileEntry));
-        }
-    }
+//    public void createCharacters() {
+//        final File folder = new File("characters/");
+//        for (File fileEntry : folder.listFiles()) {
+//            characterList.add(new Character(fileEntry));
+//        }
+//    }
 
     public void createLocations() {
         final File folder = new File("locations/");
@@ -193,15 +254,15 @@ public class Wonderland {
         }
     }
 
-    public void createItems() {
-        final File folder = new File("items/");
-        for (File fileEntry : folder.listFiles()) {
-            if (fileEntry.getPath().equals("TeaCup"))
-                for(int i = 0; i < 4; i++)
-                    itemList.add(new Item(fileEntry));
-            itemList.add(new Item(fileEntry));
-        }
-    }
+//    public void createItems() {
+//        final File folder = new File("items/");
+//        for (File fileEntry : folder.listFiles()) {
+//            if (fileEntry.getPath().equals("TeaCup"))
+//                for(int i = 0; i < 4; i++)
+//                    itemList.add(new Item(fileEntry));
+//            itemList.add(new Item(fileEntry));
+//        }
+//    }
 
 
     public void generateConnections(File file) {
@@ -237,13 +298,13 @@ public class Wonderland {
         return null;
     }
 
-    public static Character getCharacter(String name) {
-        for (Character character : characterList) {
-            if (character.getName().equals(name)) {
-                return character;
-            }
-        }
-        return null;
-    }
+//    public static Character getCharacter(String name) {
+//        for (Character character : characterList) {
+//            if (character.getName().equals(name)) {
+//                return character;
+//            }
+//        }
+//        return null;
+//    }
 
 }
