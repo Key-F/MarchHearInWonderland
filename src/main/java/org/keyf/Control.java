@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 public class Control {
 
-    /** Public static method to check whether or not an action is valid */
+    /**
+     * Public static method to check whether or not an action is valid
+     */
     public static String checkInput(String command, HashMap<String, Actions> validActions) {
 
         // Iterate over each valid action in the HashMap

@@ -1,16 +1,21 @@
 package org.keyf;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class TextUtil {
 
-    public static void printInstructions() {
 
-
+    /**
+     * Method to print info from txt file
+     * @param path - path to file
+     */
+    public static void printFromFile(String path) {
         // Create FileReader and BufferedReader objects to read the instructions from a
         // file
-        try (FileReader file = new FileReader("texts/instructions.txt");
+        try (FileReader file = new FileReader(path);
              BufferedReader br = new BufferedReader(file)) {
 
             // Create a String to store the instructions
@@ -33,34 +38,10 @@ public class TextUtil {
         }
     }
 
-    public static void printHelp() {
 
-        // Create FileReader and BufferedReader objects to read the instructions from a
-        // file
-        try (FileReader file = new FileReader("texts/help.txt");
-             BufferedReader br = new BufferedReader(file)) {
-
-            // Create a String to store the instructions
-            String line = br.readLine();
-            String instructions = "";
-
-            // While there are still lines to read in the file, append them to the
-            // instructions
-            while (line != null) {
-                instructions = instructions + line + '\n';
-                line = br.readLine();
-            }
-
-            // Return the instructions
-            System.out.println(instructions);
-
-        } catch (IOException e) {
-            // If the file is not found, display a error message
-            System.out.println("Error reading file. Please check the filename and try again.");
-        }
-    }
-
-    /** Public static method to create the game actions */
+    /**
+     * Public static method to create the game actions
+     */
     public static HashMap<String, Actions> createActions() {
 
         // Create FileReader and BufferedReader objects to read the actions from a file
@@ -68,7 +49,7 @@ public class TextUtil {
              BufferedReader br = new BufferedReader(file)) {
 
             // Create a HashMap to store the actions
-            HashMap<String, Actions> actions = new HashMap<String, Actions>();
+            HashMap<String, Actions> actions = new HashMap<>();
             String line = br.readLine();
 
             // While there are still lines to read in the file
@@ -84,7 +65,6 @@ public class TextUtil {
                 // Read the next line
                 line = br.readLine();
             }
-
             // Return the HashMap
             return actions;
 
@@ -94,6 +74,5 @@ public class TextUtil {
             return null;
         }
     }
-
 
 }

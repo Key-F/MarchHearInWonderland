@@ -1,5 +1,7 @@
 package org.keyf;
 
+import org.keyf.Location.Direction;
+
 import static org.keyf.Colors.ANSI_RED;
 
 public class Player {
@@ -16,79 +18,65 @@ public class Player {
     /**
      * Public method that moves the player to a new location
      */
-    public void move(Location.Direction direction) {
-
+    public void move(Direction direction) {
         switch (direction) {
             case north:
-                if (CurrentLocation.getExits().containsKey(Location.Direction.north))
-                    CurrentLocation = CurrentLocation.getExits().get(Location.Direction.north);
+                if (CurrentLocation.getExits().containsKey(Direction.north))
+                    CurrentLocation = CurrentLocation.getExits().get(Direction.north);
                 else System.out.println(ANSI_RED + "There is nothing in the North");
                 break;
             case south:
-                if (CurrentLocation.getExits().containsKey(Location.Direction.south))
-                    CurrentLocation = CurrentLocation.getExits().get(Location.Direction.south);
+                if (CurrentLocation.getExits().containsKey(Direction.south))
+                    CurrentLocation = CurrentLocation.getExits().get(Direction.south);
                 else System.out.println("There is nothing in the South");
                 break;
             case east:
-                if (CurrentLocation.getExits().containsKey(Location.Direction.east))
-                    CurrentLocation = CurrentLocation.getExits().get(Location.Direction.east);
+                if (CurrentLocation.getExits().containsKey(Direction.east))
+                    CurrentLocation = CurrentLocation.getExits().get(Direction.east);
                 else System.out.println("There is nothing in the South");
                 break;
             case west:
-                if (CurrentLocation.getExits().containsKey(Location.Direction.west))
-                    CurrentLocation = CurrentLocation.getExits().get(Location.Direction.west);
+                if (CurrentLocation.getExits().containsKey(Direction.west))
+                    CurrentLocation = CurrentLocation.getExits().get(Direction.west);
                 else System.out.println("There is nothing in the West");
                 break;
         }
         CurrentLocation.printInfo();
     }
 
+    /**
+     * Print info about current game progress
+     */
     public void getStatus() {
-        // check if all ch are invited
+        // check if all characters are invited
         for (Location l : Wonderland.locations)
             for (Character ch : l.getNpcs()) {
                 if (!ch.isGoingToParty()) System.out.println(ch.getName() + " is still not invited");
             }
 
+        // check if all items are collected
         for (Item i : Wonderland.player.getCharacter().getItemNeeded()) {
             if (!Wonderland.safeHouse.hasItem(i.getName())
-                    && !Wonderland.player.getInventory().hasItem(i.getName(), Wonderland.player.getCharacter()))
+                    && !Wonderland.player.getInventory().hasItem(i.getName()))
                 System.out.println("You dont have " + i.getName());
             Item ii = Wonderland.player.getInventory().getItemByName(i.getName().replace("(Broken)", ""));
             if (ii != null)
-            if (ii.getNameFullName().contains("Broken")) {
-                System.out.println(i.getNameFullName() + " is broken");
-                continue;
-            }
+                if (ii.getNameFullName().contains("Broken")) {
+                    System.out.println(i.getNameFullName() + " is broken");
+                    continue;
+                }
             ii = Wonderland.safeHouse.getItem(i.getName());
             if (ii != null)
                 if (ii.getNameFullName().contains("Broken")) {
                     System.out.println(i.getNameFullName() + " is broken");
                 }
-//            else if (Wonderland.player.getInventory().getItemByName(i.getName()) != null)
-//                if (Wonderland.player.getInventory().getItemByName(i.getName()).getNameFullName().contains("Broken"))
-//                    System.out.println(i.getNameFullName() + " is broken");
-//            if (Wonderland.safeHouse.hasItem(i.getName()))
-//                if (Wonderland.safeHouse.hasItem(i.getName()).getNameFullName().contains("Broken"))
-//                    System.out.println(i.getNameFullName() + " is broken");
         }
 
-        // check that everything is found and fixed
-        // check teacup count
     }
 
     public void fixItem(String item) {
         if (!getCurrentLocation().isSafeHouse()) System.out.println("It is not your house, you can't fix items here");
         else inventory.fixItem(item);
-    }
-
-    public boolean checkItem(Item item) {
-        if (!Wonderland.safeHouse.hasItem(item.getNameFullName()) &&
-                Wonderland.player.getInventory().hasItem(item.getNameFullName(), Wonderland.player.getCharacter())) {
-            System.out.println("You dont have " + item.getNameFullName());
-            return false;
-        }
-        return true;
     }
 
     public void talkTo(String npc) {
@@ -114,7 +102,7 @@ public class Player {
     }
 
     public void give(Character npc, String item) {
-        if (inventory.hasItem(item, character)) {
+        if (inventory.hasItem(item)) {
             if (npc.getItem(inventory.getItemByName(item)))
                 inventory.dropItem(item);
         } else System.out.println("You don't have " + item + " in your inventory");
@@ -135,15 +123,10 @@ public class Player {
                     }
                     itemsNeeded = true;
                 }
-//                    if (!Wonderland.safeHouse.hasItem(i.getName()) &&
-//                            !Wonderland.player.getInventory().hasItem(i.getName(), Wonderland.player.getCharacter())) {
-//                        System.out.println("You dont have " + i.getName() + " And I need it before visiting your party");
-//                        itemsNeeded = true;
-//                    }
-//                }
+
                 for (Item i : ch.getItemWanted()) {
                     if (!Wonderland.safeHouse.hasItem(i.getNameFullName()) &&
-                            !Wonderland.player.getInventory().hasItem(i.getNameFullName(), Wonderland.player.getCharacter())) {
+                            !Wonderland.player.getInventory().hasItem(i.getNameFullName())) {
                         System.out.println("You dont have " + i.getNameFullName() + " And I like it for a tea party");
                         itemsNeeded = true;
                     }
@@ -155,34 +138,18 @@ public class Player {
         System.out.println("There is no " + npc + " in this location");
     }
 
-//    public boolean obtains(Item item) {
-//        return inventory.hasItem(item, character);
-//    }
-
-
+    /**
+     * Method to check win condition
+     * @return
+     */
     public boolean hasWon() {
-//        int npcCount = 0;
-//        for (Location l : Wonderland.locations)
-//            for (Character ch : l.getNpcs()) {
-//                npcCount++;
-//                hasWon &= ch.isGoingToParty();
-//            }
-//
-//        //Wonderland.itemForParty.isEmpty();
-//
-//        for (Item i : Wonderland.player.getCharacter().getItemNeeded()) {
-//            hasWon = (Wonderland.safeHouse.hasItem(i.getNameFullName()) ||
-//                    Wonderland.player.getInventory().hasItem(i.getNameFullName(), Wonderland.player.getCharacter()))
-//                    && !i.getNameFullName().contains("Broken");
-//        }
         for (Location l : Wonderland.locations)
             for (Character ch : l.getNpcs()) {
                 if (!ch.isGoingToParty()) return false;
             }
-
         for (Item i : Wonderland.player.getCharacter().getItemNeeded()) {
             if (!Wonderland.safeHouse.hasItem(i.getName())
-                    && !Wonderland.player.getInventory().hasItem(i.getName(), Wonderland.player.getCharacter()))
+                    && !Wonderland.player.getInventory().hasItem(i.getName()))
                 return false;
             Item ii = Wonderland.player.getInventory().getItemByName(i.getName().replace("(Broken)", ""));
             if (ii != null)
@@ -195,13 +162,6 @@ public class Player {
                     return false;
                 }
         }
-//        for (Item i : Wonderland.itemForParty)
-//            if (!Wonderland.safeHouse.getItems().contains(i) && !(Wonderland.player.getInventory().items.contains(i))) {
-//                hasWon = false;
-//                break;
-//            }
-        // System.out.println("You don't have ");
-        //  hasWon &= ch.isGoingToParty();
         return true;
     }
 
@@ -209,23 +169,12 @@ public class Player {
         return CurrentLocation;
     }
 
-    public void setCurrentLocation(Location currentLocation) {
-        CurrentLocation = currentLocation;
-    }
-
     public Inventory getInventory() {
         return inventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
     }
 
     public Character getCharacter() {
         return character;
     }
 
-    public void setCharacter(Character character) {
-        this.character = character;
-    }
 }

@@ -12,24 +12,10 @@ import java.util.List;
 
 public class Character {
     private String name;
-    private Location location;
     private List<Item> itemNeeded;
     private List<Item> itemWanted;
     private String speech;
     private boolean isGoingToParty;
-
-    Character(File file) {
-        try {
-            InputStream is = new FileInputStream(file);
-            String jsonTxt = IOUtils.toString(is, "UTF-8");
-            JSONObject LocObj = new JSONObject(jsonTxt);
-            this.name = (String) LocObj.get("Name");
-            this.isGoingToParty = false;
-            //this.location = Wonderland.getLocation((String) LocObj.get("Location"));
-        } catch (Exception e) {
-        }
-        ;
-    }
 
     Character(String name) {
         final File folder = new File("characters/");
@@ -54,7 +40,6 @@ public class Character {
                         if (obj.equals("")) continue;
                         Item i = new Item((String) obj);
                         this.itemWanted.add(i);
-                        //Wonderland.itemForParty.add(i);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -95,8 +80,7 @@ public class Character {
         if (i.getNameFullName().contains("Broken")) {
             System.out.println(i.getNameFullName() + " is broken!");
             return false;
-        }
-        else{
+        } else {
             itemNeeded.remove(i);
             System.out.println(name + " took your " + i.getNameFullName() + " with a smile");
             return true;
@@ -105,10 +89,6 @@ public class Character {
 
     public List<Item> getItemWanted() {
         return itemWanted;
-    }
-
-    public void setItemWanted(List<Item> itemWanted) {
-        this.itemWanted = itemWanted;
     }
 
     public String getName() {
@@ -122,10 +102,6 @@ public class Character {
 
     public List<Item> getItemNeeded() {
         return itemNeeded;
-    }
-
-    public void setItemNeeded(List<Item> itemNeeded) {
-        this.itemNeeded = itemNeeded;
     }
 
 }

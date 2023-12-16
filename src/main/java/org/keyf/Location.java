@@ -4,7 +4,9 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +16,7 @@ import static org.keyf.Colors.*;
 
 public class Location {
 
-    enum Direction {
+    public enum Direction {
         north, east, south, west,
     }
 
@@ -25,14 +27,6 @@ public class Location {
     public HashMap<Direction, Location> exits;
     private List<Item> itemsNeededForAVisit;
 
-    public void storeItem(Item item) {
-        if (!isSafeHouse) {
-            System.out.println("It's not safe to store an item here");
-            return;
-        }
-        items.add(item);
-        System.out.println("You stored " + item.getNameFullName());
-    }
 
     Location(File file) {
         try {
@@ -47,38 +41,17 @@ public class Location {
 
             for (Object obj : (JSONArray) LocObj.get("Characters")) {
                 if (obj.equals("")) continue;
-                this.npcs.add(new Character((String)obj));
+                this.npcs.add(new Character((String) obj));
             }
             for (Object obj : (JSONArray) LocObj.get("Items")) {
                 if (obj.equals("")) continue;
-                this.items.add(new Item((String)obj));
+                this.items.add(new Item((String) obj));
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e) {e.printStackTrace();};
     }
-
-//    public void generateConnections(File file) {
-//        try {
-//            InputStream is = new FileInputStream(file);
-//            String jsonTxt = IOUtils.toString(is, "UTF-8");
-//            JSONObject LocObj = new JSONObject(jsonTxt);
-//            this.exits = new HashMap<>();
-//            if (!(LocObj.get("North")).equals("")) {
-//                exits.put(Direction.north, Wonderland.getLocation((String) (LocObj.get("North"))));
-//            }
-//            if (!(LocObj.get("West")).equals("")) {
-//                exits.put(Direction.west, Wonderland.getLocation((String) (LocObj.get("West"))));
-//            }
-//            if (!(LocObj.get("East")).equals("")) {
-//                exits.put(Direction.east, Wonderland.getLocation((String) (LocObj.get("East"))));
-//            }
-//            if (!(LocObj.get("South")).equals("")) {
-//                exits.put(Direction.south, Wonderland.getLocation((String) (LocObj.get("South"))));
-//            }
-//        }
-//        catch(Exception e) {};
-//    }
 
     public void printLocation() {
         System.out.println("You are in the: " + name);
@@ -88,14 +61,14 @@ public class Location {
         // info about location
         printLocation();
         // info about characters
-        if (npcs.isEmpty())  System.out.println("There're no npcs in this location");
-        else  System.out.println("NPC's in this location:");
+        if (npcs.isEmpty()) System.out.println("There're no npcs in this location");
+        else System.out.println("NPC's in this location:");
         for (Character c : npcs) {
             System.out.println("Here you see " + c.getName());
         }
         // info about items
-        if (items.isEmpty())  System.out.println("There're no items in this location");
-        else  System.out.println("Items in this location:");
+        if (items.isEmpty()) System.out.println("There're no items in this location");
+        else System.out.println("Items in this location:");
         for (Item item : items) {
             System.out.println(item.getNameFullName());
         }
@@ -158,7 +131,7 @@ public class Location {
         this.itemsNeededForAVisit = itemsNeededForAVisit;
     }
 
-    public  boolean hasItem(String item) {
+    public boolean hasItem(String item) {
         for (Item i : items) {
             if (i.getNameFullName().toLowerCase().contains(item.toLowerCase())) {
                 return true;
